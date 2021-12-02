@@ -1,7 +1,7 @@
 use anyhow::Context;
 use itertools::Itertools;
-use std::str::FromStr;
 use std::io::BufRead;
+use std::str::FromStr;
 
 enum Command {
     Fwd(i32),
@@ -13,7 +13,8 @@ impl FromStr for Command {
     type Err = anyhow::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let (cmd, num) = s.split_whitespace()
+        let (cmd, num) = s
+            .split_whitespace()
             .collect_tuple()
             .context("Wrong command format")?;
 
@@ -39,18 +40,15 @@ fn main() {
     let stdin = std::io::stdin();
     let pos = stdin.lock().lines()
         .map(|l| Command::from_str(&l.unwrap()).unwrap())
-        .fold(Coord::default(), |mut c, cmd| {
-            match cmd {
-                Command::Fwd(v) => {
-                    c.x += v;
-                    c.y += v * c.aim;
-                }
-                Command::Down(v) => c.aim += v,
-                Command::Up(v) => c.aim -= v,
-            };
-            c
+        .fold(Coord::default(), |Coord { x, y, aim }, cmd| match cmd {
+            Command::Fwd(v) => Coord {
+                x: x + v,
+                y: y + v,
+                aim,
+            },
+            Command::Down(v) => Coord { x, y, aim: aim + v },
+            Command::Up(v) => Coord { x, y, aim: aim - v },
         });
 
     println!("x: {}, y: {}, res: {}", pos.x, pos.y, pos.x * pos.y);
-
 }
