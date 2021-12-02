@@ -1,5 +1,5 @@
 [package]
-name = "d01"
+name = "day02"
 version = "0.1.0"
 edition = "2021"
 
@@ -10,9 +10,9 @@ anyhow = "1.0"
 itertools = "0.10"
 
 [[bin]]
-name="d01_1"
-path="src/main_1.rs"
+name = "day02_1"
+path = "src/main_1.rs"
 
 [[bin]]
-name="d01_2"
-path="src/main_2.rs"
+name = "day02_2"
+path = "src/main_2.rs"
