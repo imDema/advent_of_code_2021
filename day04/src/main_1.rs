@@ -18,7 +18,7 @@ struct Board {
 
 impl Board {
     pub fn parse(s: &str) -> anyhow::Result<Self> {
-        let cells= s.split_whitespace()
+        let cells= s.split_whitespace() 
             .filter(|w| w.len() > 0)
             .map(|w| u32::from_str_radix(w, 10).map(|n| Cell::new(n)))
             .collect::<Result<Vec<_>, _>>()?;
